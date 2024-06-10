@@ -1,36 +1,90 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_code_editor/flutter_code_editor.dart';
+import 'package:flutter_highlight/themes/monokai-sublime.dart';
+import 'package:highlight/languages/cpp.dart';
+// import 'package:flutter_code_editor/flutter_code_editor.dart';
 
 class PageLayout extends StatelessWidget {
-
   final String nextPage;
   final String pageTitle;
-  const PageLayout({
-    super.key,
-    required this.pageTitle,
-    required this.nextPage
-  });
+  final String question;
+  final TextEditingController controller;
+  // final CodeController question;
+  const PageLayout(
+      {super.key,
+      required this.question,
+      required this.pageTitle,
+      required this.nextPage,
+      required this.controller
+      // required this.question
+      });
 
   @override
   Widget build(BuildContext context) {
+    final myController = controller;
+    final codeController = CodeController(
+      text: question,
+      language: cpp,
+      readOnly: true,
+    );
+    final db = FirebaseFirestore.instance;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Text(pageTitle, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 50)),
+        Text(pageTitle,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 50)),
         // Image()
+        const Text(
+          'What is the output of the following code? ',
+          style: TextStyle(fontSize: 30),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: CodeTheme(
+            data: CodeThemeData(styles: monokaiSublimeTheme),
+            child: CodeField(
+              controller: codeController,
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: TextField(
+            maxLines: null,
+            controller: myController,
+          ),
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             ElevatedButton(
-                onPressed: (){
+                onPressed: () {
                   Navigator.pop(context);
-                }, child: const Text("Back")
-            ),
+                },
+                child: const Text("Back")),
             ElevatedButton(
-              onPressed: (){
-                Navigator.pushNamed(context, nextPage);
+              onPressed: () {
+                if (nextPage == '') {
+                  final answer = <String, dynamic>{
+                    // "id": ID,
+                    "Question 1": question,
+                    "Answer 1": myController.text
+                  };
+                  db.collection("answers").add(answer).then(
+                      (DocumentReference doc) =>
+                          print('DocumentSnapshot added with ID: ${doc.id}'));
+                  //TODO: Navigator.pushNamed(context, finalPage);
+                } else {
+                  Navigator.pushNamed(context, nextPage);
+                }
+                // print(myController.text);
               },
-              child: const Text("Next Question"),),
+              child: nextPage == ''
+                  ? const Text("Submit")
+                  : const Text("Next Question"),
+            ),
           ],
         )
       ],

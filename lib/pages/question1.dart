@@ -1,18 +1,40 @@
+import 'dart:math';
+
+import 'package:bachelors_project/pages/main.dart';
+import 'package:bachelors_project/questions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_code_editor/flutter_code_editor.dart';
+import 'package:highlight/languages/java.dart';
 
 import '../pagelayout.dart';
+
+final controller = CodeController(
+  text: '...',
+  language: java,
+);
 
 class Question1 extends StatelessWidget {
   const Question1({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-
-      body: Padding(
-        padding: EdgeInsets.all(32.0),
-        child: PageLayout(pageTitle: 'Question 1', nextPage: '/2'),
-      )
+    final int rng = Random().nextInt(staticQuestions.length);
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(32.0),
+          child: Column(
+            children: [
+              PageLayout(
+                controller: controllers[0],
+                question: staticQuestions.elementAt(rng),
+                pageTitle: 'Question 1',
+                nextPage: '/2',
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
