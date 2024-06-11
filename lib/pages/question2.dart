@@ -27,9 +27,9 @@ class Question2 extends StatelessWidget {
             children: [
               PageLayout(
                 controller: controllers[1],
-                question: staticQuestions.elementAt(rng),
+                question: questions[1],
                 pageTitle: 'Question 2',
-                nextPage: '',
+                nextPage: '/final',
               ),
             ],
           ),

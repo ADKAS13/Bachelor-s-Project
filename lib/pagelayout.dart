@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_code_editor/flutter_code_editor.dart';
 import 'package:flutter_highlight/themes/monokai-sublime.dart';
@@ -28,14 +27,12 @@ class PageLayout extends StatelessWidget {
       language: cpp,
       readOnly: true,
     );
-    final db = FirebaseFirestore.instance;
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         Text(pageTitle,
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 50)),
-        // Image()
         const Text(
           'What is the output of the following code? ',
           style: TextStyle(fontSize: 30),
@@ -66,23 +63,15 @@ class PageLayout extends StatelessWidget {
                 child: const Text("Back")),
             ElevatedButton(
               onPressed: () {
-                if (nextPage == '') {
-                  final answer = <String, dynamic>{
-                    // "id": ID,
-                    "Question 1": question,
-                    "Answer 1": myController.text
-                  };
-                  db.collection("answers").add(answer).then(
-                      (DocumentReference doc) =>
-                          print('DocumentSnapshot added with ID: ${doc.id}'));
-                  //TODO: Navigator.pushNamed(context, finalPage);
-                } else {
-                  Navigator.pushNamed(context, nextPage);
-                }
-                // print(myController.text);
+                // if (nextPage == 'final') {
+                //   for (var i = 0; i < controllers.length; i++) {
+
+                //   }
+                // }
+                Navigator.pushNamed(context, nextPage);
               },
-              child: nextPage == ''
-                  ? const Text("Submit")
+              child: nextPage == '/final'
+                  ? const Text("Go to submit")
                   : const Text("Next Question"),
             ),
           ],

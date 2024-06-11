@@ -1,6 +1,10 @@
+import 'dart:math';
+
 import 'package:bachelors_project/firebase_options.dart';
+import 'package:bachelors_project/pages/final_page.dart';
 import 'package:bachelors_project/pages/question1.dart';
 import 'package:bachelors_project/pages/question2.dart';
+import 'package:bachelors_project/questions.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -8,27 +12,61 @@ import 'package:flutter/material.dart';
 List<TextEditingController> controllers = [
   TextEditingController(),
   TextEditingController(),
-  TextEditingController(),
-  TextEditingController(),
-  TextEditingController(),
+  // TextEditingController(),
+  // TextEditingController(),
+  // TextEditingController(),
 ];
+
+final questions = <String>[];
+
 void main() async {
+  setQuestions(false);
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
-  // final db = FirebaseFirestore.instance;
-  // final user = <String, dynamic>{
-  //   "first": "Ada",
-  //   "last": "Lovelace",
-  //   "born": 1815
-  // };
 
 // Add a new document with a generated ID
   // db.collection("users").add(user).then((DocumentReference doc) =>
   //     print('DocumentSnapshot added with ID: ${doc.id}'));
 
   runApp(const MyApp());
+}
+
+void setQuestions(bool isDynamic) {
+  String newQuestion;
+  if (isDynamic) {
+    for (var i = 0; i < 6; i++) {
+      newQuestion =
+          dynamicQuestions.elementAt(Random().nextInt(dynamicQuestions.length));
+      if (!questions.contains(newQuestion)) {
+        questions.add(newQuestion);
+      }
+    }
+
+    for (var i = 0; i < 4; i++) {
+      newQuestion =
+          staticQuestions.elementAt(Random().nextInt(staticQuestions.length));
+      if (!questions.contains(newQuestion)) {
+        questions.add(newQuestion);
+      }
+    }
+  } else {
+    for (var i = 0; i < 6; i++) {
+      newQuestion =
+          staticQuestions.elementAt(Random().nextInt(staticQuestions.length));
+      if (!questions.contains(newQuestion)) {
+        questions.add(newQuestion);
+      }
+    }
+
+    for (var i = 0; i < 4; i++) {
+      newQuestion =
+          dynamicQuestions.elementAt(Random().nextInt(dynamicQuestions.length));
+      if (!questions.contains(newQuestion)) {
+        questions.add(newQuestion);
+      }
+    }
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -44,6 +82,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => const MainPage(),
         '/1': (context) => const Question1(),
         '/2': (context) => const Question2(),
+        '/final': (context) => const FinalPage(),
       },
     );
   }
