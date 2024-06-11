@@ -1,4 +1,4 @@
-const iteratorQuestionC = '''
+const iteratorC = '''
 void iteratorFunction()
 {
     char fruits[3][7] = {"apple", "banana", "orange"};
@@ -9,7 +9,7 @@ void iteratorFunction()
 }
 ''';
 
-const iteratorQuestionPython = '''
+const iteratorPython = '''
 def iteratorFunction():
   fruits = ["apple", "banana", "orange"]
 
@@ -17,7 +17,7 @@ def iteratorFunction():
     print(fruit)
 ''';
 
-const pointerQuestionC = '''
+const pointerC = '''
 void pointerFunction()
 {
     int value = 10;
@@ -28,7 +28,7 @@ void pointerFunction()
 }
 ''';
 
-const mapQuestionC = '''
+const mapC = '''
 int getIndex(char key[])
 {
     for (int i = 0; i < size; i++)
@@ -89,5 +89,29 @@ int main(int argc, char **argv)
 
 ''';
 
-const staticQuestions = {iteratorQuestionC, pointerQuestionC, mapQuestionC};
-const dynamicQuestions = {iteratorQuestionPython};
+const evalRepr = ''' 
+number = 10
+
+function = eval("number * 3 + 8")
+
+print(repr(function))
+''';
+
+const mapPowEnumPython = '''
+numbers = [5, 3, 1, 2]
+
+def multiply(x):
+  return x + 5
+
+result = map(multiply, numbers)
+newResult1 = []
+newResult2 = []
+for x, y in enumerate(result):
+  newResult1.append(eval("pow(y, 2)"))
+  newResult2.append(eval("pow(x, 2)"))
+print(newResult1)
+print(newResult2)
+ ''';
+
+const staticQuestions = {iteratorC, pointerC, mapC};
+const dynamicQuestions = {iteratorPython, evalRepr, mapPowEnumPython};

@@ -2,18 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_code_editor/flutter_code_editor.dart';
 import 'package:flutter_highlight/themes/monokai-sublime.dart';
 import 'package:highlight/languages/cpp.dart';
+import 'package:highlight/languages/python.dart';
+import 'package:bachelors_project/pages/main.dart';
 // import 'package:flutter_code_editor/flutter_code_editor.dart';
 
 class PageLayout extends StatelessWidget {
   final String nextPage;
-  final String pageTitle;
+  final int questionNumber;
   final String question;
   final TextEditingController controller;
   // final CodeController question;
   const PageLayout(
       {super.key,
       required this.question,
-      required this.pageTitle,
+      required this.questionNumber,
       required this.nextPage,
       required this.controller
       // required this.question
@@ -24,14 +26,14 @@ class PageLayout extends StatelessWidget {
     final myController = controller;
     final codeController = CodeController(
       text: question,
-      language: cpp,
+      language: (isDynamic && questionNumber < 3) ? python : cpp,
       readOnly: true,
     );
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Text(pageTitle,
+        Text("Question $questionNumber",
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 50)),
         const Text(
           'What is the output of the following code? ',

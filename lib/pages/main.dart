@@ -1,9 +1,7 @@
 import 'dart:math';
 
 import 'package:bachelors_project/firebase_options.dart';
-import 'package:bachelors_project/pages/final_page.dart';
-import 'package:bachelors_project/pages/question1.dart';
-import 'package:bachelors_project/pages/question2.dart';
+import 'pages.dart';
 import 'package:bachelors_project/questions.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -12,15 +10,17 @@ import 'package:flutter/material.dart';
 List<TextEditingController> controllers = [
   TextEditingController(),
   TextEditingController(),
-  // TextEditingController(),
-  // TextEditingController(),
-  // TextEditingController(),
+  TextEditingController(),
+  TextEditingController(),
+  TextEditingController(),
+  TextEditingController(),
 ];
 
 final questions = <String>[];
+bool isDynamic = true;
 
 void main() async {
-  setQuestions(false);
+  setQuestions();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -32,41 +32,64 @@ void main() async {
   runApp(const MyApp());
 }
 
-void setQuestions(bool isDynamic) {
+void setQuestions() {
   String newQuestion;
   if (isDynamic) {
-    for (var i = 0; i < 6; i++) {
-      newQuestion =
-          dynamicQuestions.elementAt(Random().nextInt(dynamicQuestions.length));
-      if (!questions.contains(newQuestion)) {
-        questions.add(newQuestion);
+    // for (var i = 0; i < 4; i++) {
+      var i = 0;
+      while (i < 6){
+      print(i);
+      if (i < 3){
+        newQuestion =
+            dynamicQuestions.elementAt(Random().nextInt(dynamicQuestions.length));
+        if (!questions.contains(newQuestion)) {
+          questions.add(newQuestion);
+          print("ADDED NEW QUESTION: QUESTION LENGTH = ${questions.length}");
+          i++;
+        }
+      } else if (i < 6){
+        newQuestion =
+            staticQuestions.elementAt(Random().nextInt(staticQuestions.length));
+        if (!questions.contains(newQuestion)) {
+          questions.add(newQuestion);
+          print("ADDED NEW QUESTION: QUESTION LENGTH = ${questions.length}");
+          i++;
+        }
       }
     }
 
-    for (var i = 0; i < 4; i++) {
-      newQuestion =
-          staticQuestions.elementAt(Random().nextInt(staticQuestions.length));
-      if (!questions.contains(newQuestion)) {
-        questions.add(newQuestion);
-      }
-    }
+    // while (< )
+    //   print(i);
+    //   newQuestion =
+    //       staticQuestions.elementAt(Random().nextInt(staticQuestions.length));
+    //   if (!questions.contains(newQuestion)) {
+    //     questions.add(newQuestion);
+    //     print("ADDED NEW QUESTION: QUESTION LENGTH = ${questions.length}");
+    //   }
+    // }
+
+
   } else {
-    for (var i = 0; i < 6; i++) {
+    for (var i = 0; i < 4; i++) {
       newQuestion =
           staticQuestions.elementAt(Random().nextInt(staticQuestions.length));
       if (!questions.contains(newQuestion)) {
         questions.add(newQuestion);
+        print("ADDED NEW QUESTION: QUESTION LENGTH = ${questions.length}");
       }
     }
 
-    for (var i = 0; i < 4; i++) {
+    for (var i = 0; i < 2; i++) {
       newQuestion =
           dynamicQuestions.elementAt(Random().nextInt(dynamicQuestions.length));
       if (!questions.contains(newQuestion)) {
         questions.add(newQuestion);
+        print("ADDED NEW QUESTION: QUESTION LENGTH = ${questions.length}");
       }
     }
   }
+  print(questions.length);
+  print(controllers.length);
 }
 
 class MyApp extends StatelessWidget {
@@ -82,6 +105,10 @@ class MyApp extends StatelessWidget {
         '/': (context) => const MainPage(),
         '/1': (context) => const Question1(),
         '/2': (context) => const Question2(),
+        '/3': (context) => const Question3(),
+        '/4': (context) => const Question4(),
+        '/5': (context) => const Question5(),
+        '/6': (context) => const Question6(),
         '/final': (context) => const FinalPage(),
       },
     );

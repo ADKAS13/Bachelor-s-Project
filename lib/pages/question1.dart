@@ -8,17 +8,12 @@ import 'package:highlight/languages/java.dart';
 
 import '../pagelayout.dart';
 
-final controller = CodeController(
-  text: '...',
-  language: java,
-);
 
 class Question1 extends StatelessWidget {
   const Question1({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final int rng = Random().nextInt(staticQuestions.length);
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -28,7 +23,7 @@ class Question1 extends StatelessWidget {
               PageLayout(
                 controller: controllers[0],
                 question: questions[0],
-                pageTitle: 'Question 1',
+                questionNumber: 1,
                 nextPage: '/2',
               ),
             ],
