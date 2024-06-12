@@ -89,7 +89,7 @@ int main(int argc, char **argv)
 
 ''';
 
-const evalRepr = ''' 
+const evalRepr = '''
 number = 10
 
 function = eval("number * 3 + 8")
@@ -113,5 +113,67 @@ print(newResult1)
 print(newResult2)
  ''';
 
-const staticQuestions = {iteratorC, pointerC, mapC};
-const dynamicQuestions = {iteratorPython, evalRepr, mapPowEnumPython};
+const builtInsPython = '''
+data = [2, 3.5, 'hello', [1, 2, 3], {'a': 1, 'b': 2}, 4.5, 'world', 6, 7]
+
+filtered_data = list(filter(lambda x: isinstance(x, int), data))
+sorted_data = sorted(filtered_data, reverse=True)
+squared_data = list(map(lambda x: x**2, sorted_data))
+unique_squared_data = set(squared_data)
+result = sum(unique_squared_data)
+
+print(result)
+''';
+
+const structsC = '''
+#include <stdio.h>
+#include <string.h>
+
+struct Student 
+{
+    char name[50];
+    int age;
+    double gpa;
+};
+
+void updateGPA(struct Student *student, double newGPA) 
+{
+    student->gpa = newGPA;
+}
+
+void printStudent(struct Student student) 
+{
+    printf("%s, %d, %.1f\\n", student.name, student.age, student.gpa);
+}
+
+int main() 
+{
+    struct Student alice = {"Alice", 20, 3.5};
+
+    struct Student students[3] = 
+    {
+        {"Bob", 22, 3.8},
+        alice,
+        {"Charlie", 19, 3.2}
+    };
+
+    updateGPA(&students[1], 3.9);
+
+    for (int i = 0; i < 3; i++) 
+    {
+        printStudent(students[i]);
+    }
+
+    return 0;
+}
+
+
+''';
+
+const staticQuestions = {iteratorC, pointerC, structsC, mapC};
+const dynamicQuestions = {
+  iteratorPython,
+  evalRepr,
+  mapPowEnumPython,
+  builtInsPython
+};

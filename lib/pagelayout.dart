@@ -26,7 +26,7 @@ class PageLayout extends StatelessWidget {
     final myController = controller;
     final codeController = CodeController(
       text: question,
-      language: (isDynamic && questionNumber < 3) ? python : cpp,
+      language: (isDynamic && questionNumber < 5) ? python : cpp,
       readOnly: true,
     );
 
@@ -42,7 +42,9 @@ class PageLayout extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: CodeTheme(
-            data: CodeThemeData(styles: monokaiSublimeTheme),
+            data: CodeThemeData(
+              styles: monokaiSublimeTheme,
+            ),
             child: CodeField(
               controller: codeController,
             ),

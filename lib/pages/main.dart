@@ -36,18 +36,18 @@ void setQuestions() {
   String newQuestion;
   if (isDynamic) {
     // for (var i = 0; i < 4; i++) {
-      var i = 0;
-      while (i < 6){
+    var i = 0;
+    while (i < 6) {
       print(i);
-      if (i < 3){
-        newQuestion =
-            dynamicQuestions.elementAt(Random().nextInt(dynamicQuestions.length));
+      if (i < 4) {
+        newQuestion = dynamicQuestions
+            .elementAt(Random().nextInt(dynamicQuestions.length));
         if (!questions.contains(newQuestion)) {
           questions.add(newQuestion);
           print("ADDED NEW QUESTION: QUESTION LENGTH = ${questions.length}");
           i++;
         }
-      } else if (i < 6){
+      } else if (i < 6) {
         newQuestion =
             staticQuestions.elementAt(Random().nextInt(staticQuestions.length));
         if (!questions.contains(newQuestion)) {
@@ -67,8 +67,6 @@ void setQuestions() {
     //     print("ADDED NEW QUESTION: QUESTION LENGTH = ${questions.length}");
     //   }
     // }
-
-
   } else {
     for (var i = 0; i < 4; i++) {
       newQuestion =
