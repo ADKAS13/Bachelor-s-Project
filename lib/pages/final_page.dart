@@ -1,4 +1,4 @@
-import 'package:bachelors_project/pages/main.dart';
+import 'package:bachelors_project/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
