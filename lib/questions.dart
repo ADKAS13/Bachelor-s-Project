@@ -28,6 +28,20 @@ void pointerFunction()
 }
 ''';
 
+const pointerC_Options = [
+  ''''
+0x7ffd81e03e7c
+10
+
+''',
+  '''
+Test
+''',
+  '''
+Test1
+'''
+];
+
 const mapC = '''
 int getIndex(char key[])
 {
@@ -89,7 +103,7 @@ int main(int argc, char **argv)
 
 ''';
 
-const evalRepr = '''
+const evalReprPython = '''
 number = 10
 
 function = eval("number * 3 + 8")
@@ -170,10 +184,264 @@ int main()
 
 ''';
 
-const staticQuestions = {iteratorC, pointerC, structsC, mapC};
-const dynamicQuestions = {
-  iteratorPython,
-  evalRepr,
-  mapPowEnumPython,
-  builtInsPython
-};
+const pointerAdvancedC = '''
+#include <stdio.h>
+
+void modifyArray(int *arr, int size) {
+    for (int i = 0; i < size; i++) {
+        *(arr + i) = *(arr + i) * 2;
+    }
+}
+
+void swap(int *a, int *b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+int main() {
+    int numbers[] = {1, 2, 3, 4, 5};
+    int *ptr = numbers;
+    
+    modifyArray(ptr, 5);
+
+    swap(&numbers[0], &numbers[4]);
+
+    for (int i = 0; i < 5; i++) {
+        printf("%d ", *(ptr + i));
+    }
+
+    return 0;
+}
+
+''';
+
+const memoryManagementC = '''
+#include <stdio.h>
+#include <stdlib.h>
+
+void fillArray(int *arr, int size) {
+    for (int i = 0; i < size; i++) {
+        *(arr + i) = i * 2;
+    }
+}
+
+void updateArray(int **arr, int old_size, int new_size) {
+    *arr = (int *)realloc(*arr, new_size * sizeof(int));
+    for (int i = old_size; i < new_size; i++) {
+        *(*arr + i) = i * 3;
+    }
+}
+
+int main() {
+    int size = 5;
+
+    int *numbers = (int *)malloc(size * sizeof(int));
+    if (numbers == NULL) {
+        printf("Memory allocation failed\\n");
+        return 1;
+    }
+
+    fillArray(numbers, size);
+
+    int new_size = 8;
+    updateArray(&numbers, size, new_size);
+
+    for (int i = 0; i < new_size; i++) {
+        printf("%d ", *(numbers + i));
+    }
+
+    free(numbers);
+
+    return 0;
+}
+
+''';
+
+const objectFunctionsPython = '''
+class Base:
+    def __init__(self, value):
+        self.value = value
+
+    def double(self):
+        self.value *= 2
+
+    def __str__(self):
+        return f"Base: {self.value}"
+
+class Derived(Base):
+    def __init__(self, value, increment):
+        super().__init__(value)
+        self.increment = increment
+
+    def double(self):
+        self.value = self.value * 2 + self.increment
+
+    def __str__(self):
+        return f"Derived: {self.value}, Increment: {self.increment}"
+
+def process(objects):
+    for obj in objects:
+        obj.double()
+        print(obj)
+
+b1 = Base(10)
+d1 = Derived(5, 3)
+b2 = Base(7)
+d2 = Derived(2, 4)
+
+objects = [b1, d1, b2, d2]
+
+process(objects)
+''';
+
+const objectFunctionsAdvancedPython = '''
+class A:
+    def __init__(self, value):
+        self.value = value
+
+    def compute(self):
+        return self.value * 2
+
+    def __str__(self):
+        return f"A: {self.value}"
+
+class B(A):
+    def __init__(self, value, extra):
+        super().__init__(value)
+        self.extra = extra
+
+    def compute(self):
+        return super().compute() + self.extra
+
+    def __str__(self):
+        return f"B: {self.value}, Extra: {self.extra}"
+
+class C(A):
+    def __init__(self, value):
+        super().__init__(value)
+        self.nested = self.Nested(value)
+
+    class Nested:
+        def __init__(self, value):
+            self.value = value
+
+        def nested_compute(self):
+            return self.value ** 2
+
+def create_closure(base_value):
+    def inner(multiplier):
+        return base_value * multiplier
+    return inner
+
+class D(B, C):
+    def __init__(self, value, extra, multiplier):
+        B.__init__(self, value, extra)
+        C.__init__(self, value)
+        self.closure = create_closure(self.value)
+        self.multiplier = multiplier
+
+    def compute(self):
+        return self.closure(self.multiplier) + self.extra
+
+    def __str__(self):
+        return f"D: {self.value}, Extra: {self.extra}, Multiplier: {self.multiplier}"
+
+# Initialize objects
+a = A(3)
+b = B(4, 5)
+c = C(2)
+d = D(3, 4, 2)
+
+# Create a mixed list of objects
+objects = [a, b, c, d]
+
+# Compute and print results
+for obj in objects:
+    print(f"{obj} -> Compute: {obj.compute()}")
+
+# Print nested compute results for objects of type C and its subclasses
+for obj in objects:
+    if isinstance(obj, C):
+        print(f"{obj} -> Nested Compute: {obj.nested.nested_compute()}")
+
+''';
+
+const objectFunctionsAdvancedPythonOptions = [
+  '''
+A: 3 -> Compute: 6
+B: 4, Extra: 5 -> Compute: 13
+A: 2 -> Compute: 4
+D: 3, Extra: 4, Multiplier: 2 -> Compute: 10
+A: 2 -> Nested Compute: 4
+D: 3, Extra: 4, Multiplier: 2 -> Nested Compute: 6
+''',
+  '''
+A: 3 -> Compute: 6
+B: 4, Extra: 5 -> Compute: 13
+A: 2 -> Compute: 4
+D: 3, Extra: 4, Multiplier: 2 -> Compute: 10
+A: 2 -> Nested Compute: 4
+D: 3, Extra: 4, Multiplier: 2 -> Nested Compute: 9
+''',
+  '''
+A: 3 -> Compute: 6
+B: 4, Extra: 5 -> Compute: 13
+A: 2 -> Compute: 4
+D: 3, Extra: 4, Multiplier: 2 -> Compute: 10
+C: 2 -> Nested Compute: 4
+D: 3, Extra: 4, Multiplier: 2 -> Nested Compute: 9
+'''
+];
+
+class Question {
+  final bool isMultipleChoice;
+  final String questionText;
+  Question({required this.questionText, required this.isMultipleChoice});
+}
+
+class MultipleChoiceQuestion extends Question {
+  final String optionA;
+  final String optionB;
+  final String optionC;
+  final String optionD;
+  final String answer;
+
+  MultipleChoiceQuestion(
+      {required super.questionText,
+      super.isMultipleChoice = true,
+      required this.optionA,
+      required this.optionB,
+      required this.optionC,
+      required this.answer,
+      this.optionD = "I don't know"});
+}
+
+var staticQuestions = [
+  Question(questionText: iteratorC, isMultipleChoice: false),
+  MultipleChoiceQuestion(
+      questionText: pointerC,
+      isMultipleChoice: true,
+      optionA: pointerC_Options[0],
+      optionB: pointerC_Options[1],
+      optionC: pointerC_Options[2],
+      answer: "A"),
+  Question(questionText: structsC, isMultipleChoice: false),
+  Question(questionText: mapC, isMultipleChoice: false),
+  Question(questionText: pointerAdvancedC, isMultipleChoice: false),
+  Question(questionText: memoryManagementC, isMultipleChoice: false),
+];
+
+var dynamicQuestions = [
+  Question(questionText: iteratorPython, isMultipleChoice: false),
+  Question(questionText: evalReprPython, isMultipleChoice: false),
+  Question(questionText: mapPowEnumPython, isMultipleChoice: false),
+  Question(questionText: builtInsPython, isMultipleChoice: false),
+  Question(questionText: objectFunctionsPython, isMultipleChoice: false),
+  MultipleChoiceQuestion(
+      questionText: objectFunctionsAdvancedPython,
+      optionA: objectFunctionsAdvancedPythonOptions[0],
+      optionB: objectFunctionsAdvancedPythonOptions[1],
+      optionC: objectFunctionsAdvancedPythonOptions[2],
+      answer: "B")
+];

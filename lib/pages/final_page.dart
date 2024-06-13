@@ -36,8 +36,8 @@ class FinalPage extends StatelessWidget {
                   onPressed: () {
                     final answer = <String, dynamic>{};
                     for (int i = 1; i <= controllers.length; i++) {
-                      answer["questions$i"] = questions[i - 1];
-                      answer["answers$i"] = controllers[i - 1].text;
+                      answer["Questions $i"] = questions[i - 1].questionText;
+                      answer["Answer $i"] = controllers[i - 1].text;
                     }
                     db.collection("answers").add(answer).then(
                         (DocumentReference doc) =>

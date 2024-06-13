@@ -1,39 +1,46 @@
+import 'package:bachelors_project/pages/main.dart';
+import 'package:bachelors_project/questions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_code_editor/flutter_code_editor.dart';
 import 'package:flutter_highlight/themes/monokai-sublime.dart';
 import 'package:highlight/languages/cpp.dart';
 import 'package:highlight/languages/python.dart';
-import 'package:bachelors_project/pages/main.dart';
 // import 'package:flutter_code_editor/flutter_code_editor.dart';
 
-class PageLayout extends StatelessWidget {
+class PageLayout extends StatefulWidget {
   final String nextPage;
   final int questionNumber;
-  final String question;
+  final Question question;
   final TextEditingController controller;
   // final CodeController question;
-  const PageLayout(
-      {super.key,
-      required this.question,
-      required this.questionNumber,
-      required this.nextPage,
-      required this.controller
-      // required this.question
-      });
+  const PageLayout({
+    super.key,
+    required this.question,
+    required this.questionNumber,
+    required this.nextPage,
+    required this.controller,
+    // required this.question
+  });
 
   @override
+  State<PageLayout> createState() => _PageLayoutState();
+}
+
+class _PageLayoutState extends State<PageLayout> {
+  String? answer;
+  @override
   Widget build(BuildContext context) {
-    final myController = controller;
+    final question = widget.question;
+    final myController = widget.controller;
     final codeController = CodeController(
-      text: question,
-      language: (isDynamic && questionNumber < 5) ? python : cpp,
+      text: widget.question.questionText,
+      language: (isDynamic && widget.questionNumber > 1) ? python : cpp,
       readOnly: true,
     );
-
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Text("Question $questionNumber",
+        Text("Question ${widget.questionNumber}",
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 50)),
         const Text(
           'What is the output of the following code? ',
@@ -52,10 +59,60 @@ class PageLayout extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.all(16.0),
-          child: TextField(
-            maxLines: null,
-            controller: myController,
-          ),
+          child: widget.question.isMultipleChoice
+              ? Column(
+                  children: [
+                    RadioListTile<String>(
+                        groupValue: answer,
+                        title:
+                            Text((question as MultipleChoiceQuestion).optionA),
+                        value: "A",
+                        onChanged: (String? value) {
+                          setState(() {
+                            if (value != null) {
+                              answer = value;
+                            }
+                          });
+                        }),
+                    RadioListTile<String>(
+                        groupValue: answer,
+                        title: Text((question).optionB),
+                        value: "B",
+                        onChanged: (String? value) {
+                          setState(() {
+                            if (value != null) {
+                              answer = value;
+                            }
+                          });
+                        }),
+                    RadioListTile<String>(
+                        groupValue: answer,
+                        title: Text((question).optionC),
+                        value: "C",
+                        onChanged: (String? value) {
+                          setState(() {
+                            if (value != null) {
+                              answer = value;
+                            }
+                          });
+                        }),
+                    RadioListTile<String>(
+                        groupValue: answer,
+                        title: Text((question).optionD),
+                        value: "D",
+                        onChanged: (String? value) {
+                          setState(() {
+                            if (value != null) {
+                              answer = value;
+                            }
+                          });
+                        }),
+                  ],
+                )
+              : TextField(
+                  maxLines: null,
+                  controller: myController,
+                ),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -67,14 +124,30 @@ class PageLayout extends StatelessWidget {
                 child: const Text("Back")),
             ElevatedButton(
               onPressed: () {
-                // if (nextPage == 'final') {
-                //   for (var i = 0; i < controllers.length; i++) {
-
-                //   }
-                // }
-                Navigator.pushNamed(context, nextPage);
+                print(answer);
+                if (question is MultipleChoiceQuestion) {
+                  if (answer != null) {
+                    myController.text = answer as String;
+                    Navigator.pushNamed(context, widget.nextPage);
+                  } else {
+                    showDialog(
+                      context: context,
+                      builder: (_) => AlertDialog(
+                        title: const Text("Please provide an answer"),
+                        content: FloatingActionButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text("Close"),
+                        ),
+                      ),
+                    );
+                  }
+                } else {
+                  Navigator.pushNamed(context, widget.nextPage);
+                }
               },
-              child: nextPage == '/final'
+              child: widget.nextPage == '/final'
                   ? const Text("Go to submit")
                   : const Text("Next Question"),
             ),
