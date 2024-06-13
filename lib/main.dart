@@ -15,40 +15,38 @@ List<TextEditingController> controllers = [
   TextEditingController(),
   TextEditingController(),
   TextEditingController(),
+  TextEditingController(),
 ];
 
 final questions = <Question>[];
-bool isDynamic = true;
+bool isDynamic = false;
 
 void main() async {
-  setQuestions();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
-// Add a new document with a generated ID
-  // db.collection("users").add(user).then((DocumentReference doc) =>
-  //     print('DocumentSnapshot added with ID: ${doc.id}'));
-
   runApp(const MyApp());
 }
 
 void setQuestions() {
+  questions.clear();
+  var numQuestions = 7;
   Question newQuestion;
   if (isDynamic) {
     // for (var i = 0; i < 4; i++) {
-    var i = 2;
-    questions.add(staticQuestions.last);
-    questions.add(dynamicQuestions.last);
-    while (i < 6) {
-      if (i < 4) {
+    // var i = 2;
+    // questions.add(staticQuestions.last);
+    // questions.add(dynamicQuestions.last);
+    var i = 0;
+    while (i < numQuestions) {
+      if (i < numQuestions * 0.7) {
         newQuestion = dynamicQuestions
             .elementAt(Random().nextInt(dynamicQuestions.length));
         if (!questions.contains(newQuestion)) {
           questions.add(newQuestion);
           i++;
         }
-      } else if (i < 6) {
+      } else {
         newQuestion =
             staticQuestions.elementAt(Random().nextInt(staticQuestions.length));
         if (!questions.contains(newQuestion)) {
@@ -59,15 +57,15 @@ void setQuestions() {
     }
   } else {
     var i = 0;
-    while (i < 6) {
-      if (i < 4) {
+    while (i < numQuestions) {
+      if (i < numQuestions * 0.7) {
         newQuestion =
             staticQuestions.elementAt(Random().nextInt(staticQuestions.length));
         if (!questions.contains(newQuestion)) {
           questions.add(newQuestion);
           i++;
         }
-      } else if (i < 6) {
+      } else {
         newQuestion = dynamicQuestions
             .elementAt(Random().nextInt(dynamicQuestions.length));
         if (!questions.contains(newQuestion)) {
@@ -102,9 +100,14 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MainPage extends StatelessWidget {
+class MainPage extends StatefulWidget {
   const MainPage({super.key});
 
+  @override
+  State<MainPage> createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -123,12 +126,34 @@ class MainPage extends StatelessWidget {
             child: ButtonTheme(
               minWidth: 200,
               height: 100,
-              child: ElevatedButton(
-                  child: const Text("Start Quiz"),
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/1');
-                  }),
+              child: SizedBox(
+                child: ElevatedButton(
+                    child: const Text("Start Quiz"),
+                    onPressed: () {
+                      setQuestions();
+                      Navigator.pushNamed(context, '/1');
+                    }),
+              ),
             ),
+          ),
+          const SizedBox(
+            height: 50,
+          ),
+          const Text(
+            "Dynamic questions?",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          Checkbox(
+            value: isDynamic,
+            onChanged: (bool? newValue) {
+              setState(() {
+                if (isDynamic == false) {
+                  isDynamic = true;
+                } else {
+                  isDynamic = false;
+                }
+              });
+            },
           ),
         ],
       ),

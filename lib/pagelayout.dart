@@ -124,7 +124,6 @@ class _PageLayoutState extends State<PageLayout> {
                 child: const Text("Back")),
             ElevatedButton(
               onPressed: () {
-                print(answer);
                 if (question is MultipleChoiceQuestion) {
                   if (answer != null) {
                     myController.text = answer as String;
