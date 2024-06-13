@@ -1,5 +1,4 @@
 {
-    "cSpell.words": [
-        "monokai"
-    ]
+  "cSpell.words": ["monokai"],
+  "cmake.configureOnOpen": true
 }
