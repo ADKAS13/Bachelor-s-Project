@@ -29,21 +29,19 @@ void pointerFunction()
 ''';
 
 const pointerC_Options = [
-  ''''
-0x7ffd81e03e7c
+  '''0x7ffd81e03e7c
 10
-
 ''',
   '''
-Test
+10
+0x7ffd81e03e7c
 ''',
   '''
-Test1
+10, 0x7ffd81e03e7c
 '''
 ];
 
-const mapC = '''
-int getIndex(char key[])
+const mapC = '''int getIndex(char key[])
 {
     for (int i = 0; i < size; i++)
     {
@@ -103,16 +101,14 @@ int main(int argc, char **argv)
 
 ''';
 
-const evalReprPython = '''
-number = 10
+const evalReprPython = '''number = 10
 
 function = eval("number * 3 + 8")
 
 print(repr(function))
 ''';
 
-const mapPowEnumPython = '''
-numbers = [5, 3, 1, 2]
+const mapPowEnumPython = '''numbers = [5, 3, 1, 2]
 
 def multiply(x):
   return x + 5
@@ -139,8 +135,7 @@ result = sum(unique_squared_data)
 print(result)
 ''';
 
-const structsC = '''
-#include <stdio.h>
+const structsC = '''#include <stdio.h>
 #include <string.h>
 
 struct Student 
@@ -180,12 +175,9 @@ int main()
 
     return 0;
 }
-
-
 ''';
 
-const pointerAdvancedC = '''
-#include <stdio.h>
+const pointerAdvancedC = '''#include <stdio.h>
 
 void modifyArray(int *arr, int size) {
     for (int i = 0; i < size; i++) {
@@ -216,8 +208,7 @@ int main() {
 
 ''';
 
-const memoryManagementC = '''
-#include <stdio.h>
+const memoryManagementC = '''#include <stdio.h>
 #include <stdlib.h>
 
 void fillArray(int *arr, int size) {
@@ -258,8 +249,7 @@ int main() {
 
 ''';
 
-const objectFunctionsPython = '''
-class Base:
+const objectFunctionsPython = '''class Base:
     def __init__(self, value):
         self.value = value
 
@@ -295,8 +285,7 @@ objects = [b1, d1, b2, d2]
 process(objects)
 ''';
 
-const objectFunctionsAdvancedPython = '''
-class A:
+const objectFunctionsAdvancedPython = '''class A:
     def __init__(self, value):
         self.value = value
 
@@ -368,24 +357,21 @@ for obj in objects:
 ''';
 
 const objectFunctionsAdvancedPythonOptions = [
-  '''
-A: 3 -> Compute: 6
+  '''A: 3 -> Compute: 6
 B: 4, Extra: 5 -> Compute: 13
 A: 2 -> Compute: 4
 D: 3, Extra: 4, Multiplier: 2 -> Compute: 10
 A: 2 -> Nested Compute: 4
 D: 3, Extra: 4, Multiplier: 2 -> Nested Compute: 6
 ''',
-  '''
-A: 3 -> Compute: 6
+  '''A: 3 -> Compute: 6
 B: 4, Extra: 5 -> Compute: 13
 A: 2 -> Compute: 4
 D: 3, Extra: 4, Multiplier: 2 -> Compute: 10
 A: 2 -> Nested Compute: 4
 D: 3, Extra: 4, Multiplier: 2 -> Nested Compute: 9
 ''',
-  '''
-A: 3 -> Compute: 6
+  '''A: 3 -> Compute: 6
 B: 4, Extra: 5 -> Compute: 13
 A: 2 -> Compute: 4
 D: 3, Extra: 4, Multiplier: 2 -> Compute: 10
@@ -397,7 +383,11 @@ D: 3, Extra: 4, Multiplier: 2 -> Nested Compute: 9
 class Question {
   final bool isMultipleChoice;
   final String questionText;
-  Question({required this.questionText, required this.isMultipleChoice});
+  final String answer;
+  Question(
+      {required this.questionText,
+      required this.isMultipleChoice,
+      required this.answer});
 }
 
 class MultipleChoiceQuestion extends Question {
@@ -405,39 +395,71 @@ class MultipleChoiceQuestion extends Question {
   final String optionB;
   final String optionC;
   final String optionD;
-  final String answer;
 
   MultipleChoiceQuestion(
       {required super.questionText,
+      required super.answer,
       super.isMultipleChoice = true,
       required this.optionA,
       required this.optionB,
       required this.optionC,
-      required this.answer,
       this.optionD = "I don't know"});
 }
 
 var staticQuestions = [
-  Question(questionText: iteratorC, isMultipleChoice: false),
+  Question(questionText: iteratorC, isMultipleChoice: false, answer: '''apple
+banana
+orange
+'''),
   MultipleChoiceQuestion(
-      questionText: pointerC,
-      isMultipleChoice: true,
-      optionA: pointerC_Options[0],
-      optionB: pointerC_Options[1],
-      optionC: pointerC_Options[2],
-      answer: "A"),
-  Question(questionText: structsC, isMultipleChoice: false),
-  Question(questionText: mapC, isMultipleChoice: false),
-  Question(questionText: pointerAdvancedC, isMultipleChoice: false),
-  Question(questionText: memoryManagementC, isMultipleChoice: false),
+    questionText: pointerC,
+    isMultipleChoice: true,
+    answer: "A",
+    optionA: pointerC_Options[0],
+    optionB: pointerC_Options[1],
+    optionC: pointerC_Options[2],
+  ),
+  Question(
+      questionText: structsC, isMultipleChoice: false, answer: '''Bob, 22, 3.8
+Alice, 20, 3.9
+Charlie, 19, 3.2
+'''),
+  Question(
+      questionText: mapC, isMultipleChoice: false, answer: '''John: 1234567890
+Mary: 246891012
+Peter: 987654321
+'''),
+  Question(
+      questionText: pointerAdvancedC,
+      isMultipleChoice: false,
+      answer: '''10 4 6 8 2 '''),
+  Question(
+      questionText: memoryManagementC,
+      isMultipleChoice: false,
+      answer: '''0 2 4 6 8 15 18 21'''),
 ];
 
 var dynamicQuestions = [
-  Question(questionText: iteratorPython, isMultipleChoice: false),
-  Question(questionText: evalReprPython, isMultipleChoice: false),
-  Question(questionText: mapPowEnumPython, isMultipleChoice: false),
-  Question(questionText: builtInsPython, isMultipleChoice: false),
-  Question(questionText: objectFunctionsPython, isMultipleChoice: false),
+  Question(
+      questionText: iteratorPython, isMultipleChoice: false, answer: '''apple
+banana
+orange'''),
+  Question(
+      questionText: evalReprPython, isMultipleChoice: false, answer: '''38'''),
+  Question(
+      questionText: mapPowEnumPython,
+      isMultipleChoice: false,
+      answer: '''[100, 64, 36, 49]
+[0, 1, 4, 9]'''),
+  Question(
+      questionText: builtInsPython, isMultipleChoice: false, answer: '''80'''),
+  Question(
+      questionText: objectFunctionsPython,
+      isMultipleChoice: false,
+      answer: '''Base: 20
+Derived: 13, Increment: 3
+Base: 14
+Derived: 8, Increment: 4'''),
   MultipleChoiceQuestion(
       questionText: objectFunctionsAdvancedPython,
       optionA: objectFunctionsAdvancedPythonOptions[0],

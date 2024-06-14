@@ -17,13 +17,6 @@ class FinalPage extends StatelessWidget {
             child: Text("This is the end of the quiz",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 50)),
           ),
-          const Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Text(
-              'Thank you for your participation',
-              style: TextStyle(fontSize: 30),
-            ),
-          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -35,6 +28,7 @@ class FinalPage extends StatelessWidget {
               ElevatedButton(
                   onPressed: () {
                     final answer = <String, dynamic>{};
+                    answer["Correctly answered"] = correctlyAnswered;
                     for (int i = 1; i <= controllers.length; i++) {
                       answer["Questions $i"] = questions[i - 1].questionText;
                       answer["Answer $i"] = controllers[i - 1].text;
@@ -42,7 +36,8 @@ class FinalPage extends StatelessWidget {
                     db.collection("answers").add(answer).then(
                         (DocumentReference doc) =>
                             print('DocumentSnapshot added with ID: ${doc.id}'));
-                    // TODO: Navigator.pushNamed(context, ThankYouPage());
+
+                    Navigator.pushNamed(context, '/thankyou');
                   },
                   child: const Text("Submit")),
             ],

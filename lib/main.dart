@@ -20,6 +20,7 @@ List<TextEditingController> controllers = [
 
 final questions = <Question>[];
 bool isDynamic = false;
+final correctlyAnswered = <int>[];
 
 void main() async {
   await Firebase.initializeApp(
@@ -94,7 +95,9 @@ class MyApp extends StatelessWidget {
         '/4': (context) => const Question4(),
         '/5': (context) => const Question5(),
         '/6': (context) => const Question6(),
+        '/7': (context) => const Question7(),
         '/final': (context) => const FinalPage(),
+        '/thankyou': (context) => const ThankYouPage(),
       },
     );
   }

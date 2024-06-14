@@ -32,9 +32,16 @@ class _PageLayoutState extends State<PageLayout> {
   Widget build(BuildContext context) {
     final question = widget.question;
     final myController = widget.controller;
-    final codeController = CodeController(
+    final dynamicController = CodeController(
       text: widget.question.questionText,
-      language: (isDynamic && widget.questionNumber > 1) ? python : cpp,
+      language:
+          (widget.questionNumber <= (questions.length * 0.7)) ? python : cpp,
+      readOnly: true,
+    );
+    final staticController = CodeController(
+      text: widget.question.questionText,
+      language:
+          (widget.questionNumber <= (questions.length * 0.7)) ? cpp : python,
       readOnly: true,
     );
     return Column(
@@ -53,7 +60,7 @@ class _PageLayoutState extends State<PageLayout> {
               styles: monokaiSublimeTheme,
             ),
             child: CodeField(
-              controller: codeController,
+              controller: isDynamic ? dynamicController : staticController,
             ),
           ),
         ),
@@ -126,6 +133,9 @@ class _PageLayoutState extends State<PageLayout> {
               onPressed: () {
                 if (question is MultipleChoiceQuestion) {
                   if (answer != null) {
+                    if (answer == question.answer) {
+                      correctlyAnswered.add(widget.questionNumber);
+                    }
                     myController.text = answer as String;
                     Navigator.pushNamed(context, widget.nextPage);
                   } else {
@@ -143,6 +153,9 @@ class _PageLayoutState extends State<PageLayout> {
                     );
                   }
                 } else {
+                  if (myController.text == question.answer) {
+                    correctlyAnswered.add(widget.questionNumber);
+                  }
                   Navigator.pushNamed(context, widget.nextPage);
                 }
               },
