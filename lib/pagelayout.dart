@@ -153,10 +153,25 @@ class _PageLayoutState extends State<PageLayout> {
                     );
                   }
                 } else {
-                  if (myController.text == question.answer) {
-                    correctlyAnswered.add(widget.questionNumber);
+                  if (myController.text == '') {
+                    showDialog(
+                      context: context,
+                      builder: (_) => AlertDialog(
+                        title: const Text("Please provide an answer"),
+                        content: FloatingActionButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text("Close"),
+                        ),
+                      ),
+                    );
+                  } else {
+                    if (myController.text == question.answer) {
+                      correctlyAnswered.add(widget.questionNumber);
+                    }
+                    Navigator.pushNamed(context, widget.nextPage);
                   }
-                  Navigator.pushNamed(context, widget.nextPage);
                 }
               },
               child: widget.nextPage == '/final'
