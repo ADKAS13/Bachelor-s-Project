@@ -35,13 +35,13 @@ class _PageLayoutState extends State<PageLayout> {
     final dynamicController = CodeController(
       text: widget.question.questionText,
       language:
-          (widget.questionNumber <= 5) ? python : cpp,
+          (widget.questionNumber <= 6) ? python : cpp,
       readOnly: true,
     );
     final staticController = CodeController(
       text: widget.question.questionText,
       language:
-          (widget.questionNumber <= 5) ? cpp : python,
+          (widget.questionNumber <= 6) ? cpp : python,
       readOnly: true,
     );
     return Column(
