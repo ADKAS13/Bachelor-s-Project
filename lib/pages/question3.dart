@@ -15,6 +15,10 @@ class Question3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (questions.isEmpty) {
+      print("WHY ISN'T THIS WORKING");
+      setQuestions();
+    }
     // final int rng = Random().nextInt(staticQuestions.length);
     return Scaffold(
       body: SingleChildScrollView(

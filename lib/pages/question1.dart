@@ -8,6 +8,10 @@ class Question1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (questions.isEmpty) {
+      print("WHY ISN'T THIS WORKING");
+      setQuestions();
+    }
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -27,3 +31,14 @@ class Question1 extends StatelessWidget {
     );
   }
 }
+
+// class Question1 extends StatelessWidget {
+//   const Question1({
+//     super.key,
+//   });
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return S
+//   }
+// }

@@ -113,16 +113,18 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
+    const double multiplier = 15;
+    double unitHeightValue = MediaQuery.of(context).size.height * 0.01;
     return Scaffold(
         body: Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const Text("Coding Quiz Natural Language",
+          Text("Coding Quiz Natural Language",
               style: TextStyle(
                   color: Colors.black,
-                  fontSize: 100,
+                  fontSize: multiplier * unitHeightValue,
                   fontWeight: FontWeight.bold)),
           Padding(
             padding: const EdgeInsets.only(top: 100.0),

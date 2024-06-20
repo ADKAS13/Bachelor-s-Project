@@ -1,4 +1,5 @@
 {
   "cSpell.words": ["monokai"],
-  "cmake.configureOnOpen": true
+  "cmake.configureOnOpen": true,
+  "cmake.sourceDirectory": "C:/Users/david/Documents/Thesis/bachelor_project/windows/flutter"
 }

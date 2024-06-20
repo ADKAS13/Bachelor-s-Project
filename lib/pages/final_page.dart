@@ -32,8 +32,9 @@ class FinalPage extends StatelessWidget {
                     for (int i = 1; i <= controllers.length; i++) {
                       answer["Questions $i"] = questions[i - 1].questionText;
                       answer["Answer $i"] = controllers[i - 1].text;
+                      answer["isDynamic"] = isDynamic;
                     }
-                    db.collection("answers").add(answer).then(
+                    db.collection("Testing").add(answer).then(
                         (DocumentReference doc) =>
                             print('DocumentSnapshot added with ID: ${doc.id}'));
 
