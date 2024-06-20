@@ -9,7 +9,6 @@ class Question7 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (questions.isEmpty) {
-      print("WHY ISN'T THIS WORKING");
       setQuestions();
     }
     return Scaffold(

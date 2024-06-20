@@ -112,94 +112,92 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     double aspectRatio =
         MediaQuery.of(context).size.width / MediaQuery.of(context).size.height;
-    double textMultiplier = aspectRatio > 1 ? 13 : 5;
+    double textMultiplier = (aspectRatio > 1) ? 11 : 5;
     double unitHeightValue = MediaQuery.of(context).size.height * 0.01;
 
     return Scaffold(
       body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text("Coding Quiz Natural\nLanguage",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: textMultiplier * unitHeightValue,
-                      fontWeight: FontWeight.bold)),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      "More C experience: ",
-                      style: TextStyle(fontWeight: FontWeight.w600),
-                    ),
-                    Radio<String>(
-                        value: 'C',
-                        // title: const Text("More C Experience"),
-                        groupValue: typeExperience,
-                        onChanged: (String? value) {
-                          setState(() {
-                            if (value != null) {
-                              typeExperience = value;
-                              isDynamic = 1;
-                            }
-                          });
-                        }),
-                    const SizedBox(
-                      width: 30,
-                    ),
-                    const Text(
-                      "More Python Experience: ",
-                      style: TextStyle(fontWeight: FontWeight.w600),
-                    ),
-                    Radio<String>(
-                        value: 'Python',
-                        // title: const Text("More Python Experience"),
-                        groupValue: typeExperience,
-                        onChanged: (String? value) {
-                          setState(() {
-                            if (value != null) {
-                              typeExperience = value;
-                              isDynamic = 0;
-                            }
-                          });
-                        })
-                  ],
-                ),
-              ),
-              ButtonTheme(
-                minWidth: 200,
-                height: 100,
-                child: SizedBox(
-                  child: ElevatedButton(
-                      child: const Text("Start Quiz"),
-                      onPressed: () {
-                        if (isDynamic != -1) {
-                          setQuestions();
-                          Navigator.pushNamed(context, '/1');
-                        } else {
-                          showDialog(
-                            context: context,
-                            builder: (_) => AlertDialog(
-                              title: const Text("Please select a checkbox"),
-                              content: FloatingActionButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: const Text("Close"),
-                              ),
-                            ),
-                          );
-                        }
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text("Coding Quiz Natural\nLanguage",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: textMultiplier * unitHeightValue,
+                    fontWeight: FontWeight.bold)),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    "More C experience: ",
+                    style: TextStyle(fontWeight: FontWeight.w600),
+                  ),
+                  Radio<String>(
+                      value: 'C',
+                      // title: const Text("More C Experience"),
+                      groupValue: typeExperience,
+                      onChanged: (String? value) {
+                        setState(() {
+                          if (value != null) {
+                            typeExperience = value;
+                            isDynamic = 1;
+                          }
+                        });
                       }),
-                ),
+                  const SizedBox(
+                    width: 30,
+                  ),
+                  const Text(
+                    "More Python Experience: ",
+                    style: TextStyle(fontWeight: FontWeight.w600),
+                  ),
+                  Radio<String>(
+                      value: 'Python',
+                      // title: const Text("More Python Experience"),
+                      groupValue: typeExperience,
+                      onChanged: (String? value) {
+                        setState(() {
+                          if (value != null) {
+                            typeExperience = value;
+                            isDynamic = 0;
+                          }
+                        });
+                      })
+                ],
               ),
-            ],
-          ),
+            ),
+            ButtonTheme(
+              minWidth: 200,
+              height: 100,
+              child: SizedBox(
+                child: ElevatedButton(
+                    child: const Text("Start Quiz"),
+                    onPressed: () {
+                      if (isDynamic != -1) {
+                        setQuestions();
+                        Navigator.pushNamed(context, '/1');
+                      } else {
+                        showDialog(
+                          context: context,
+                          builder: (_) => AlertDialog(
+                            title: const Text("Please select a checkbox"),
+                            content: FloatingActionButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Text("Close"),
+                            ),
+                          ),
+                        );
+                      }
+                    }),
+              ),
+            ),
+          ],
         ),
       ),
     );

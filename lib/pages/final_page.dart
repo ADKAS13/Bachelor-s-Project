@@ -34,7 +34,7 @@ class FinalPage extends StatelessWidget {
                       answer["Answer $i"] = controllers[i - 1].text;
                       answer["isDynamic"] = isDynamic;
                     }
-                    db.collection("Testing").add(answer).then(
+                    db.collection("Second Session").add(answer).then(
                         (DocumentReference doc) =>
                             print('DocumentSnapshot added with ID: ${doc.id}'));
 
