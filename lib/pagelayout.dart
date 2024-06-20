@@ -60,7 +60,8 @@ class _PageLayoutState extends State<PageLayout> {
               styles: monokaiSublimeTheme,
             ),
             child: CodeField(
-              controller: isDynamic ? dynamicController : staticController,
+              controller:
+                  (isDynamic == 1) ? dynamicController : staticController,
             ),
           ),
         ),

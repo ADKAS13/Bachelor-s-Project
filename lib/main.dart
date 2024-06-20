@@ -19,7 +19,7 @@ List<TextEditingController> controllers = [
 ];
 
 final questions = <Question>[];
-bool isDynamic = false;
+double isDynamic = -1;
 final correctlyAnswered = <int>[];
 
 void main() async {
@@ -33,11 +33,7 @@ void setQuestions() {
   questions.clear();
   var numQuestions = 7;
   Question newQuestion;
-  if (isDynamic) {
-    // for (var i = 0; i < 4; i++) {
-    // var i = 2;
-    // questions.add(staticQuestions.last);
-    // questions.add(dynamicQuestions.last);
+  if (isDynamic == 1) {
     var i = 0;
     while (i < numQuestions) {
       if (i < numQuestions * 0.7) {
@@ -111,57 +107,96 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  String? typeExperience;
   @override
   Widget build(BuildContext context) {
-    const double multiplier = 15;
+    const double textMultiplier = 13;
     double unitHeightValue = MediaQuery.of(context).size.height * 0.01;
     return Scaffold(
-        body: Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text("Coding Quiz Natural Language",
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: multiplier * unitHeightValue,
-                  fontWeight: FontWeight.bold)),
-          Padding(
-            padding: const EdgeInsets.only(top: 100.0),
-            child: ButtonTheme(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text("Coding Quiz Natural\nLanguage",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: textMultiplier * unitHeightValue,
+                    fontWeight: FontWeight.bold)),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    "More C experience: ",
+                    style: TextStyle(fontWeight: FontWeight.w600),
+                  ),
+                  Radio<String>(
+                      value: 'C',
+                      // title: const Text("More C Experience"),
+                      groupValue: typeExperience,
+                      onChanged: (String? value) {
+                        setState(() {
+                          if (value != null) {
+                            typeExperience = value;
+                            isDynamic = 1;
+                          }
+                        });
+                      }),
+                  const SizedBox(
+                    width: 30,
+                  ),
+                  const Text(
+                    "More Python Experience: ",
+                    style: TextStyle(fontWeight: FontWeight.w600),
+                  ),
+                  Radio<String>(
+                      value: 'Python',
+                      // title: const Text("More Python Experience"),
+                      groupValue: typeExperience,
+                      onChanged: (String? value) {
+                        setState(() {
+                          if (value != null) {
+                            typeExperience = value;
+                            isDynamic = 0;
+                          }
+                        });
+                      })
+                ],
+              ),
+            ),
+            ButtonTheme(
               minWidth: 200,
               height: 100,
               child: SizedBox(
                 child: ElevatedButton(
                     child: const Text("Start Quiz"),
                     onPressed: () {
-                      setQuestions();
-                      Navigator.pushNamed(context, '/1');
+                      if (isDynamic != -1) {
+                        setQuestions();
+                        Navigator.pushNamed(context, '/1');
+                      } else {
+                        showDialog(
+                          context: context,
+                          builder: (_) => AlertDialog(
+                            title: const Text("Please select a checkbox"),
+                            content: FloatingActionButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Text("Close"),
+                            ),
+                          ),
+                        );
+                      }
                     }),
               ),
             ),
-          ),
-          const SizedBox(
-            height: 50,
-          ),
-          const Text(
-            "Dynamic questions?",
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-          Checkbox(
-            value: isDynamic,
-            onChanged: (bool? newValue) {
-              setState(() {
-                if (isDynamic == false) {
-                  isDynamic = true;
-                } else {
-                  isDynamic = false;
-                }
-              });
-            },
-          ),
-        ],
+          ],
+        ),
       ),
-    ));
+    );
   }
 }

@@ -17,6 +17,31 @@ def iteratorFunction():
     print(fruit)
 ''';
 
+const arraysC = '''#include <stdio.h>
+
+void updateArray(int arr[], int size) {
+    for (int i = 0; i < size; i++){
+        if (i % 2 == 0) {
+            arr[i] += 1;
+        } else {
+            arr[i] -= 1;
+        }
+    }
+}
+
+void printArray(int arr[], int size) {
+    for (int i = 0; i < size; i++) {
+        printf("%i ", arr[i]);
+    }
+}
+
+int main(int argc, char *argv) {
+    int arr[] = {3, 1, 4, 5, 9, 2, 6};
+    int size = sizeof(arr) / sizeof(arr[0]);
+    updateArray(arr, size);
+    printArray(arr, size);
+}''';
+
 const pointerC = '''
 void pointerFunction()
 {
@@ -433,10 +458,12 @@ Peter: 987654321
       questionText: pointerAdvancedC,
       isMultipleChoice: false,
       answer: '''10 4 6 8 2 '''),
+  // Question(
+  //     questionText: memoryManagementC,
+  //     isMultipleChoice: false,
+  //     answer: '''0 2 4 6 8 15 18 21'''),
   Question(
-      questionText: memoryManagementC,
-      isMultipleChoice: false,
-      answer: '''0 2 4 6 8 15 18 21'''),
+      questionText: arraysC, isMultipleChoice: false, answer: '4 0 5 4 10 1 7 ')
 ];
 
 var dynamicQuestions = [
@@ -446,11 +473,11 @@ banana
 orange'''),
   Question(
       questionText: evalReprPython, isMultipleChoice: false, answer: '''38'''),
-  Question(
-      questionText: mapPowEnumPython,
-      isMultipleChoice: false,
-      answer: '''[100, 64, 36, 49]
-[0, 1, 4, 9]'''),
+//   Question(
+//       questionText: mapPowEnumPython,
+//       isMultipleChoice: false,
+//       answer: '''[100, 64, 36, 49]
+// [0, 1, 4, 9]'''),
   Question(
       questionText: builtInsPython, isMultipleChoice: false, answer: '''80'''),
   Question(
