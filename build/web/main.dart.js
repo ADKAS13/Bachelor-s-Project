@@ -44309,11 +44309,11 @@ A.ih.prototype={
 aj(){return new A.SK(B.j)}}
 A.SK.prototype={
 K(a){var s,r,q,p,o,n,m,l,k=this,j=null,i=k.a,h=i.e,g=i.f
-i=i.d<=6?$.GE():$.asG()
+i=i.d<6?$.GE():$.asG()
 s=A.atq(i,!0,h.b)
 i=k.a
 r=i.e
-i=i.d<=6?$.asG():$.GE()
+i=i.d<6?$.asG():$.GE()
 q=A.atq(i,!0,r.b)
 r=A.e4("Question "+k.a.d,j,j,j,B.l0,j,j)
 i=A.atr(B.IE)
