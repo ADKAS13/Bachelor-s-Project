@@ -479,7 +479,7 @@ orange'''),
 //       answer: '''[100, 64, 36, 49]
 // [0, 1, 4, 9]'''),
   Question(
-      questionText: builtInsPython, isMultipleChoice: false, answer: '''80'''),
+      questionText: builtInsPython, isMultipleChoice: false, answer: '''89'''),
   Question(
       questionText: objectFunctionsPython,
       isMultipleChoice: false,
