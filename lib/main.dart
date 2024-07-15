@@ -1,14 +1,10 @@
-// import 'dart:io';
-import 'dart:html' as webFile;
-import 'package:file_picker/file_picker.dart' as webPicker;
 import 'dart:math';
 
 import 'package:bachelors_project/firebase_options.dart';
 import 'package:bachelors_project/questions.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:path_provider/path_provider.dart';
+
 import './pages/pages.dart';
 
 // var ID = Random().nextInt(2147483647);
@@ -27,7 +23,9 @@ double isDynamic = -1;
 final correctlyAnswered = <int>[];
 
 void main() async {
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.web);
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -108,24 +106,6 @@ class MainPage extends StatefulWidget {
   State<MainPage> createState() => _MainPageState();
 }
 
-// Future<String> get _localPath async {
-//   final directory = await getApplicationDocumentsDirectory();
-
-//   return directory.path;
-// }
-
-// Future<File> get _localFile async {
-//   final path = await _localPath;
-//   return File('$path/file.txt');
-// }
-
-// Future<File> writeCounter(String counter) async {
-//   final file = await _localFile;
-
-//   // Write the file
-//   return file.writeAsString('$counter');
-// }
-
 class _MainPageState extends State<MainPage> {
   String? typeExperience;
   @override
@@ -196,32 +176,24 @@ class _MainPageState extends State<MainPage> {
               child: SizedBox(
                 child: ElevatedButton(
                     child: const Text("Start Quiz"),
-                    onPressed: () async {
-                      // if (isDynamic != -1) {
-                      setQuestions();
-                      // Navigator.pushNamed(context, '/1');
-                      final db = FirebaseFirestore.instance;
-                      // print(db.collection("answers").get());
-
-                      await db.collection("answers").get().then(
-                        (querySnapshot) async {
-                          print("Successfully completed");
-                          for (var docSnapshot in querySnapshot.docs) {
-                            var result = docSnapshot.data();
-                            // '${docSnapshot.id} => ${docSnapshot.data()}';
-                            print(result);
-                            var blob = webFile.Blob([result], 'json', 'native');
-
-                            webFile.AnchorElement(
-                              href: webFile.Url.createObjectUrlFromBlob(blob)
-                                  .toString(),
-                            )
-                              ..setAttribute("download", "results.txt")
-                              ..click();
-                          }
-                        },
-                        onError: (e) => print("Error completing: $e"),
-                      );
+                    onPressed: () {
+                      if (isDynamic != -1) {
+                        setQuestions();
+                        Navigator.pushNamed(context, '/1');
+                      } else {
+                        showDialog(
+                          context: context,
+                          builder: (_) => AlertDialog(
+                            title: const Text("Please select a checkbox"),
+                            content: FloatingActionButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Text("Close"),
+                            ),
+                          ),
+                        );
+                      }
                     }),
               ),
             ),
