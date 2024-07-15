@@ -21,7 +21,7 @@ class Question7 extends StatelessWidget {
                 controller: controllers[6],
                 question: questions[6],
                 questionNumber: 7,
-                nextPage: '/final',
+                nextPage: '/8',
               ),
             ],
           ),

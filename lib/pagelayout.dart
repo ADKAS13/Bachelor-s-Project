@@ -64,62 +64,63 @@ class _PageLayoutState extends State<PageLayout> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: widget.question.isMultipleChoice
-              ? Column(
-                  children: [
-                    RadioListTile<String>(
-                        groupValue: answer,
-                        title:
-                            Text((question as MultipleChoiceQuestion).optionA),
-                        value: "A",
-                        onChanged: (String? value) {
-                          setState(() {
-                            if (value != null) {
-                              answer = value;
-                            }
-                          });
-                        }),
-                    RadioListTile<String>(
-                        groupValue: answer,
-                        title: Text((question).optionB),
-                        value: "B",
-                        onChanged: (String? value) {
-                          setState(() {
-                            if (value != null) {
-                              answer = value;
-                            }
-                          });
-                        }),
-                    RadioListTile<String>(
-                        groupValue: answer,
-                        title: Text((question).optionC),
-                        value: "C",
-                        onChanged: (String? value) {
-                          setState(() {
-                            if (value != null) {
-                              answer = value;
-                            }
-                          });
-                        }),
-                    RadioListTile<String>(
-                        groupValue: answer,
-                        title: Text((question).optionD),
-                        value: "D",
-                        onChanged: (String? value) {
-                          setState(() {
-                            if (value != null) {
-                              answer = value;
-                            }
-                          });
-                        }),
-                  ],
-                )
-              : TextField(
-                  maxLines: null,
-                  controller: myController,
-                ),
-        ),
+            padding: const EdgeInsets.all(16.0),
+            child: widget.question.isMultipleChoice
+                ? Column(
+                    children: [
+                      RadioListTile<String>(
+                          groupValue: answer,
+                          title: Text(
+                              (question as MultipleChoiceQuestion).optionA),
+                          value: "A",
+                          onChanged: (String? value) {
+                            setState(() {
+                              if (value != null) {
+                                answer = value;
+                              }
+                            });
+                          }),
+                      RadioListTile<String>(
+                          groupValue: answer,
+                          title: Text((question).optionB),
+                          value: "B",
+                          onChanged: (String? value) {
+                            setState(() {
+                              if (value != null) {
+                                answer = value;
+                              }
+                            });
+                          }),
+                      RadioListTile<String>(
+                          groupValue: answer,
+                          title: Text((question).optionC),
+                          value: "C",
+                          onChanged: (String? value) {
+                            setState(() {
+                              if (value != null) {
+                                answer = value;
+                              }
+                            });
+                          }),
+                      RadioListTile<String>(
+                          groupValue: answer,
+                          title: Text((question).optionD),
+                          value: "D",
+                          onChanged: (String? value) {
+                            setState(() {
+                              if (value != null) {
+                                answer = value;
+                              }
+                            });
+                          }),
+                    ],
+                  )
+                : null
+            // TextField(
+            //     maxLines: null,
+            //     controller: myController,
+            //   ),
+            ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -130,48 +131,50 @@ class _PageLayoutState extends State<PageLayout> {
                 child: const Text("Back")),
             ElevatedButton(
               onPressed: () {
-                if (question is MultipleChoiceQuestion) {
-                  if (answer != null) {
-                    if (answer == question.answer) {
-                      correctlyAnswered.add(widget.questionNumber);
-                    }
-                    myController.text = answer as String;
-                    Navigator.pushNamed(context, widget.nextPage);
-                  } else {
-                    showDialog(
-                      context: context,
-                      builder: (_) => AlertDialog(
-                        title: const Text("Please provide an answer"),
-                        content: FloatingActionButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: const Text("Close"),
-                        ),
-                      ),
-                    );
-                  }
-                } else {
-                  if (myController.text == '') {
-                    showDialog(
-                      context: context,
-                      builder: (_) => AlertDialog(
-                        title: const Text("Please provide an answer"),
-                        content: FloatingActionButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: const Text("Close"),
-                        ),
-                      ),
-                    );
-                  } else {
-                    if (myController.text == question.answer) {
-                      correctlyAnswered.add(widget.questionNumber);
-                    }
-                    Navigator.pushNamed(context, widget.nextPage);
-                  }
-                }
+                // if (question is MultipleChoiceQuestion) {
+                //   if (answer != null) {
+                //     if (answer == question.answer) {
+                //       correctlyAnswered.add(widget.questionNumber);
+                //     }
+                //     myController.text = answer as String;
+                //     Navigator.pushNamed(context, widget.nextPage);
+                //   }
+                //   else {
+                //     showDialog(
+                //       context: context,
+                //       builder: (_) => AlertDialog(
+                //         title: const Text("Please provide an answer"),
+                //         content: FloatingActionButton(
+                //           onPressed: () {
+                //             Navigator.pop(context);
+                //           },
+                //           child: const Text("Close"),
+                //         ),
+                //       ),
+                //     );
+                //   }
+                // } else {
+                //   if (myController.text == '') {
+                //     showDialog(
+                //       context: context,
+                //       builder: (_) => AlertDialog(
+                //         title: const Text("Please provide an answer"),
+                //         content: FloatingActionButton(
+                //           onPressed: () {
+                //             Navigator.pop(context);
+                //           },
+                //           child: const Text("Close"),
+                //         ),
+                //       ),
+                //     );
+                //   } else {
+                //     if (myController.text == question.answer) {
+                //       correctlyAnswered.add(widget.questionNumber);
+                //     }
+                //     Navigator.pushNamed(context, widget.nextPage);
+                //   }
+                // }
+                Navigator.pushNamed(context, widget.nextPage);
               },
               child: widget.nextPage == '/final'
                   ? const Text("Go to submit")
